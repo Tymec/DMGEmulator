@@ -1,0 +1,21 @@
+{
+    "json.schemaDownload.enable": true,
+    // C#
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+    "dotnet.defaultSolution": "GameBoyEmulator.sln",
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    // Editor
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/obj": true,
+        "**/bin": true,
+    },
+}
