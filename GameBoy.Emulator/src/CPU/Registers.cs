@@ -10,6 +10,9 @@ public class Registers {
     public byte H { get; set; }
     public byte L { get; set; }
 
+    public ushort SP { get; set; }
+    public ushort PC { get; set; }
+
     public bool ZeroFlag { get; set; }
     public bool SubtractionFlag { get; set; }
     public bool HalfCarryFlag { get; set; }
