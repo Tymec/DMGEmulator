@@ -444,3 +444,4 @@ obj/
 # Gameboy
 *.gb
 *.gbc
+*.bin
