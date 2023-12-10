@@ -1,9 +1,11 @@
-namespace GameBoy.Emulator.Memory;
+using GameBoy.Gamepak;
+
+namespace GameBoy.Memory;
 
 
 public class MMU {
     private readonly byte[] boot;
-    private readonly Cartridge.Cartridge cart;
+    private readonly Cartridge cart;
 
     // Memory
     private readonly byte[] vram;
@@ -21,7 +23,7 @@ public class MMU {
         set => Write(address, value);
     }
 
-    public MMU(Cartridge.Cartridge cart, byte[]? bootRom) {
+    public MMU(Cartridge cart, byte[]? bootRom) {
         this.cart = cart;
         boot = bootRom ?? new byte[0x0100];
         // TODO: If no boot ROM is provided, set initial state

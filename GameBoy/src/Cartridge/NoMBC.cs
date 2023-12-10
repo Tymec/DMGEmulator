@@ -1,4 +1,4 @@
-namespace GameBoy.Emulator.Cartridge;
+namespace GameBoy.Gamepak;
 
 
 public class NoMBC(byte[] data) : Cartridge(data) {

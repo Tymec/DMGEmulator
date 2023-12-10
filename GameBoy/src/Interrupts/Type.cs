@@ -1,4 +1,4 @@
-namespace GameBoy.Emulator.Interrupts;
+namespace GameBoy.Interrupts;
 
 public enum Type {
     VBlank = 0x01,

@@ -1,7 +1,7 @@
-namespace GameBoy.Emulator.CPU;
+namespace GameBoy.CPU;
 
 public partial class CPU {
-    public int ExecuteUnprefixed(byte opcode) {
+    public int ExecuteUnprefixedMod(byte opcode) {
         // XXYYYZZZ -> xyz (in octal)
         var x = (opcode & 0b11000000) >> 6;
         var y = (opcode & 0b00111000) >> 3;
@@ -78,6 +78,22 @@ public partial class CPU {
                         // ADD HL, rp[p]
                         OP_add(GetRP(p));
                         return 8;
+                    case 2 when q == 0 && p == 0:
+                        break; // LD (BC), A
+                    case 2 when q == 0 && p == 1:
+                        break; // LD (DE), A
+                    case 2 when q == 0 && p == 2:
+                        break; // LD (HL+), A
+                    case 2 when q == 0 && p == 3:
+                        break; // LD (HL-), A
+                    case 2 when q == 1 && p == 0:
+                        break; // LD A, (BC)
+                    case 2 when q == 1 && p == 1:
+                        break; // LD A, (DE)
+                    case 2 when q == 1 && p == 2:
+                        break; // LD A, (HL+)
+                    case 2 when q == 1 && p == 3:
+                        break; // LD A, (HL-)
                     case 3 when q == 0:
                         // INC rp[p]
                         SetRP(p, OP_inc(GetRP(p)));
@@ -128,6 +144,7 @@ public partial class CPU {
                         return 4;
                     default: throw new NotImplementedException($"Opcode {opcode:X4} not implemented");
                 }
+                break;
             case 1:
                 // HALT
                 if (z == 6 && y == 6) {
@@ -146,83 +163,7 @@ public partial class CPU {
                 throw new NotImplementedException($"Opcode {opcode:X4} not implemented");
             default: throw new NotImplementedException($"Opcode {opcode:X4} not implemented");
         }
-    }
 
-    public int ExecuteUnprefixedOld(byte opcode) {
-        switch (opcode) {
-            case 0x00:
-                return 4;   // NOP 4T
-            case 0x01:
-                reg.BC = Read16();
-                return 12;  // LD BC,u16 12T
-            case 0x02:
-                Write8(reg.BC, reg.A);
-                return 8;   // LD (BC),A 8T
-            case 0x03:
-                reg.BC = OP_inc(reg.BC);
-                return 8;   // INC BC 8T
-            case 0x04:
-                reg.B = OP_inc(reg.B);
-                return 4;   // INC B 4T
-            case 0x05:
-                reg.B = OP_dec(reg.B);
-                return 4;   // DEC B 4T
-            case 0x06:
-                reg.B = Read8();
-                return 8;   // LD B,u8 8T
-            case 0x07:
-                reg.A = (byte)((reg.A >> 7) | (reg.A << 1));
-                reg.ZeroFlag = false;
-                reg.SubtractionFlag = false;
-                reg.HalfCarryFlag = false;
-                reg.CarryFlag = (reg.A & 0x01) == 0x01;
-                return 4;   // RLCA 4T
-            case 0x08:
-                Write16(Read16(), reg.SP);
-                return 20;  // LD (u16),SP 20T
-            case 0x09:
-                return 8;   // ADD HL,BC 8T
-            case 0x0A:
-                reg.A = Read8(reg.BC);
-                return 8;   // LD A,(BC) 8T
-            case 0x0B:
-                reg.BC = OP_dec(reg.BC);
-                return 8;   // DEC BC 8T
-            case 0x0C:
-                reg.C = OP_inc(reg.C);
-                return 4;   // INC C 4T
-            case 0x0D:
-                reg.C = OP_dec(reg.C);
-                return 4;   // DEC C 4T
-            case 0x0E:
-                reg.C = Read8();
-                return 8;   // LD C,u8 8T
-            case 0x0F:
-                return 4;   // RRCA 4T
-            case 0x10:
-                reg.PC++;   // NOTE: Skip next byte
-                halted = true;
-                return 4;   // STOP 4T
-            case 0x76:
-                halted = true;
-                return 4;   // HALT 4T
-            case 0xF3:
-                ime = false;
-                imeScheduled = false;
-                return 4;   // DI 4T
-            case 0xFB:
-                imeScheduled = true;
-                return 4;   // EI 4T
-
-            case 0xCB: throw new InvalidOperationException("Prefixed opcode called");
-
-            default: throw new NotImplementedException($"Opcode {opcode:X4} not implemented");
-        }
-    }
-
-    public int ExecutePrefixed(byte opcode) {
-        switch (opcode) {
-            default: throw new NotImplementedException($"Prefixed opcode {opcode:X4} not implemented");
-        }
+        throw new NotImplementedException($"Opcode {opcode:X4} not implemented");
     }
 }

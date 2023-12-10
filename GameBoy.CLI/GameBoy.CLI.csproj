@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\GameBoy.Emulator\GameBoy.Emulator.csproj" />
+    <ProjectReference Include="..\GameBoy\GameBoy.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace GameBoy.Emulator.Cartridge;
+namespace GameBoy.Gamepak;
 
 
 public abstract class Cartridge {

@@ -1,4 +1,4 @@
-namespace GameBoy.Emulator.CPU;
+namespace GameBoy.CPU;
 
 
 public partial class CPU {
@@ -128,7 +128,8 @@ public partial class CPU {
             reg.A << 1      // rotate left
         );
 
-        shifted |= throughCarry ?
+        // TODO: Fixme
+        // shifted |= throughCarry ?
 
 
         reg.ZeroFlag = false;

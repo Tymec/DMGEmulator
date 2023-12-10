@@ -1,4 +1,4 @@
-namespace GameBoy.Emulator;
+namespace GameBoy;
 
 
 public static class Utils {
