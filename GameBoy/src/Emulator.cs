@@ -5,13 +5,13 @@ namespace GameBoy;
 public class Emulator {
     private bool isRunning = false;
 
-    private readonly Cartridge.Cartridge cartridge;
+    private readonly Gamepak.Cartridge cartridge;
     private readonly CPU.CPU cpu;
     private readonly Memory.MMU mmu;
     private readonly Interrupts.Handler interrupts;
 
     public Emulator(string romPath, string? bootRomPath = null) {
-        cartridge = Cartridge.Cartridge.FromFile(romPath);
+        cartridge = Gamepak.Cartridge.FromFile(romPath);
         mmu = new Memory.MMU(cartridge, LoadBootRom(bootRomPath));
         interrupts = new Interrupts.Handler();
         cpu = new CPU.CPU(mmu, interrupts);
