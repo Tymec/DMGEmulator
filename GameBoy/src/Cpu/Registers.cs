@@ -1,6 +1,8 @@
+namespace GameBoy.Cpu;
+
+
 using System.Runtime.InteropServices;
 
-namespace GameBoy.CPU;
 
 [StructLayout(LayoutKind.Explicit)]
 public struct Registers {

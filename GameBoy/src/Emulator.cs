@@ -2,34 +2,41 @@ namespace GameBoy;
 
 using GameBoy.Gamepak;
 using GameBoy.Memory;
+using GameBoy.Cpu;
 
 
-// TODO: Rename
 public class Emulator {
-    private bool isRunning = false;
+    private bool _running = false;
 
-    private readonly CPU.CPU cpu;
+    private readonly CPU cpu;
     private readonly MMU mmu;
 
-    public Emulator(string romPath, string bootRomPath) {
-        // TODO: In the future, boot rom should be optional
-        var cartridge = Cartridge.FromFile(romPath);
-        if (!cartridge.Valid) throw new ArgumentException("Cartridge is not valid");
-        var bootRom = Bootrom.FromFile(bootRomPath);
-        if (!bootRom.Valid) throw new ArgumentException("Bootrom is not valid");
-        mmu = new MMU(cartridge, bootRom);
+    public Emulator(Cartridge cartridge) {
+        if (!cartridge.Valid) throw new Exception("Invalid cartridge");
 
+        mmu = new MMU(cartridge);
         var interrupts = new Interrupts.Handler();
-        cpu = new CPU.CPU(mmu, interrupts);
+        cpu = new CPU(mmu, interrupts);
     }
 
-    public static Emulator LoadRom(string romPath) { }
+    public Emulator(string romPath, string? bootromPath = null) {
+        var cartridge = Cartridge.FromFile(romPath);
 
-    public static Emulator LoadBootrom(string bootromPath) { }
+        mmu = new MMU(cartridge);
+        var interrupts = new Interrupts.Handler();
+        cpu = new CPU(mmu, interrupts);
+
+        if (bootromPath != null) {
+            byte[] bootrom = File.ReadAllBytes(bootromPath);
+            mmu.LoadBootrom(bootrom);
+        } else {
+            throw new NotImplementedException();
+        }
+    }
 
     public void Run() {
-        isRunning = true;
-        while (isRunning) {
+        _running = true;
+        while (_running) {
             cpu.Cycle();
 
             // For now sleep for 500ms to see what's going on

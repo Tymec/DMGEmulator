@@ -1,4 +1,5 @@
-namespace GameBoy.CPU;
+namespace GameBoy.Cpu;
+
 
 public partial class CPU {
     const bool HALT_BUG = true;

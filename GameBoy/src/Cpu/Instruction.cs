@@ -1,4 +1,4 @@
-namespace GameBoy.CPU;
+namespace GameBoy.Cpu;
 
 
 public readonly struct Instruction(string mnemonic, int length, int cycles, Action execute) {

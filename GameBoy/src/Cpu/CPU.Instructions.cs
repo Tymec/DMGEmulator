@@ -1,4 +1,4 @@
-namespace GameBoy.CPU;
+namespace GameBoy.Cpu;
 
 
 public partial class CPU {

@@ -14,7 +14,7 @@
                 "--rom",
                 "Roms/Tetris.gb",
                 "--boot-rom",
-                "Roms/DMG_BOOT.gb"
+                "Roms/DMG_BOOT.bin"
             ],
             "stopAtEntry": false,
             "console": "integratedTerminal",

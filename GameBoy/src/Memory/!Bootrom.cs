@@ -1,4 +1,4 @@
-namespace GameBoy.Gamepak;
+namespace GameBoy.Bootrom;
 
 using System.Security.Cryptography;
 
@@ -13,9 +13,10 @@ public class Bootrom(byte[] data, bool allowCustom = false) {
         STADIUM2, UNKNOWN
     }
 
+    private readonly string _hash = HashString(data);
+
     public byte this[int index] => data[index];
-    public string Hash => BitConverter.ToString(SHA256.HashData(data)).Replace("-", "").ToLower();
-    public BootromType Type => Hash switch {
+    public BootromType Type => _hash switch {
         "26e71cf01e301e5dc40e987cd2ecbf6d0276245890ac829db2a25323da86818e" => BootromType.DMG0,
         "cf053eccb4ccafff9e67339d4e78e98dce7d1ed59be819d2a1ba2232c6fce1c7" => BootromType.DMG,
         "a8cb5f4f1f16f2573ed2ecd8daedb9c5d1dd2c30a481f9b179b5d725d95eafe2" => BootromType.MGB,
@@ -26,7 +27,7 @@ public class Bootrom(byte[] data, bool allowCustom = false) {
         "fe2d45405531756d87622abde6127c804bd675cb968081b2c052497a470ffeb2" => BootromType.AGB0,
         "fe3cceb79930c4cb6c6f62f742c2562fd4c96b827584ef8ea89d49b387bd6860" => BootromType.AGB,
         "7b7a881e483c0dffdb20d1e2c4dae93a04cfbb84052a91f652340f15bc315200" => BootromType.STADIUM2,
-        _ when Hash.Length != 64 => throw new ArgumentException($"Invalid SHA-256: {Hash}"),
+        _ when _hash.Length != 64 => throw new ArgumentException($"Invalid SHA-256: {_hash}"),
         _ => BootromType.UNKNOWN,
     };
     public int Size => Type switch {
@@ -51,4 +52,6 @@ public class Bootrom(byte[] data, bool allowCustom = false) {
     public bool Valid => Type == BootromType.UNKNOWN ?
         allowCustom :
         Size == data.Length;
+
+    private static string HashString(byte[] data) => BitConverter.ToString(SHA256.HashData(data)).Replace("-", "").ToLower();
 }

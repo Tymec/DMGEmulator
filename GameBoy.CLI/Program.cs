@@ -8,9 +8,8 @@ public class Program {
         [Option('r', "rom", HelpText = "Path to the ROM file.")]
         public required string RomPath { get; set; }
 
-        // TODO: In the future, the boot ROM should be optional
-        [Option('b', "boot-rom", HelpText = "Path to the boot ROM file.")]
-        public required string BootromPath { get; set; }
+        [Option('b', "boot-rom", Required = false, HelpText = "Path to the boot ROM file.")]
+        public string? BootromPath { get; set; }
     }
 
     public static void Main(string[] args) => Parser.Default
@@ -19,18 +18,17 @@ public class Program {
         .WithNotParsed(HandleParseError);
 
     private static void RunWithOptions(Options opts) {
-        Console.WriteLine($"ROM path: {opts.RomPath}");
-        Console.WriteLine($"Boot ROM path: {opts.BootromPath}");
-
-        if (!TestRom(opts.RomPath) || !TestBootRom(opts.BootromPath)) {
-            return;
-        }
+        if (!TestRom(opts.RomPath)) return;
+        if (opts.BootromPath != null && TestBootRom(opts.BootromPath)) return;
 
         Emulator emulator = new(opts.RomPath, opts.BootromPath);
         emulator.Run();
     }
 
     private static void HandleParseError(IEnumerable<Error> errs) {
+        foreach (Error err in errs) {
+            Console.Error.WriteLine(err);
+        }
     }
 
     private static bool TestRom(string romPath) {

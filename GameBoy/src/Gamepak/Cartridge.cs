@@ -1,6 +1,6 @@
-using System.Text;
-
 namespace GameBoy.Gamepak;
+
+using System.Text;
 
 
 public abstract class Cartridge {
