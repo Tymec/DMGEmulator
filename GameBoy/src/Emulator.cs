@@ -1,25 +1,31 @@
 namespace GameBoy;
 
+using GameBoy.Gamepak;
+using GameBoy.Memory;
+
 
 // TODO: Rename
 public class Emulator {
     private bool isRunning = false;
 
-    private readonly Cartridge.Cartridge cartridge;
     private readonly CPU.CPU cpu;
-    private readonly Memory.MMU mmu;
-    private readonly Interrupts.Handler interrupts;
+    private readonly MMU mmu;
 
-    public Emulator(string romPath, string? bootRomPath = null) {
-        cartridge = Cartridge.Cartridge.FromFile(romPath);
-        mmu = new Memory.MMU(cartridge, LoadBootRom(bootRomPath));
-        interrupts = new Interrupts.Handler();
+    public Emulator(string romPath, string bootRomPath) {
+        // TODO: In the future, boot rom should be optional
+        var cartridge = Cartridge.FromFile(romPath);
+        if (!cartridge.Valid) throw new ArgumentException("Cartridge is not valid");
+        var bootRom = Bootrom.FromFile(bootRomPath);
+        if (!bootRom.Valid) throw new ArgumentException("Bootrom is not valid");
+        mmu = new MMU(cartridge, bootRom);
+
+        var interrupts = new Interrupts.Handler();
         cpu = new CPU.CPU(mmu, interrupts);
     }
 
-    public static byte[]? LoadBootRom(string? path) {
-        return path != null ? File.ReadAllBytes(path) : null;
-    }
+    public static Emulator LoadRom(string romPath) { }
+
+    public static Emulator LoadBootrom(string bootromPath) { }
 
     public void Run() {
         isRunning = true;

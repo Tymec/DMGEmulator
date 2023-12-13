@@ -30,6 +30,8 @@ public abstract class Cartridge {
     public bool IsHeaderChecksumValid => data[0x014D] == CalculateHeaderChecksum();
     public ushort GlobalChecksum => (ushort)((data[0x014E] << 8) | data[0x014F]);
 
+    public bool Valid => IsHeaderChecksumValid; // TODO: more checks
+
     private byte CartridgeType => data[0x0147];
     private byte ROMSize => data[0x0148];
     private byte RAMSize => data[0x0149];

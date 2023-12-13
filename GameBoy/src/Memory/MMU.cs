@@ -4,7 +4,7 @@ namespace GameBoy.Memory;
 
 
 public class MMU {
-    private readonly byte[] boot;
+    private readonly Bootrom bootRom;
     private readonly Cartridge cart;
 
     // Memory
@@ -16,16 +16,14 @@ public class MMU {
     // TODO: IO
     // TODO: Interrupts
 
-    public bool HasBootRom => boot.Length > 0;
-
     public byte this[ushort address] {
         get => Read(address);
         set => Write(address, value);
     }
 
-    public MMU(Cartridge cart, byte[]? bootRom) {
+    public MMU(Cartridge cart, Bootrom bootRom) {
         this.cart = cart;
-        boot = bootRom ?? new byte[0x0100];
+        this.bootRom = bootRom;
         // TODO: If no boot ROM is provided, set initial state
 
         vram = new byte[0x2000];
@@ -35,7 +33,7 @@ public class MMU {
     }
 
     public byte Read(ushort address) => address switch {
-        >= 0x0000 and < 0x0100 => boot[address],                    // Boot ROM
+        >= 0x0000 and < 0x0100 => bootRom[address],                 // Boot ROM
         >= 0x0100 and < 0x4000 => cart.ReadRom(address),            // ROM bank 00
         >= 0x4000 and < 0x8000 => cart.ReadRom(address),            // ROM bank 01-NN
         >= 0x8000 and < 0xA000 => vram[address - 0x8000],           // VRAM

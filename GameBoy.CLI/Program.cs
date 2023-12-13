@@ -1,23 +1,36 @@
-﻿using GameBoy.Gamepak;
+﻿namespace GameBoy.ConsoleApp;
 
-namespace GameBoy.ConsoleApp;
-
+using CommandLine;
+using GameBoy.Gamepak;
 
 public class Program {
-    public static void Main(string[] args) {
-        string romPath = args[0];
-        string? bootRomPath = args.Length > 1 ? args[1] : null;
+    public class Options {
+        [Option('r', "rom", HelpText = "Path to the ROM file.")]
+        public required string RomPath { get; set; }
 
-        if (!TestRom(romPath)) {
+        // TODO: In the future, the boot ROM should be optional
+        [Option('b', "boot-rom", HelpText = "Path to the boot ROM file.")]
+        public required string BootromPath { get; set; }
+    }
+
+    public static void Main(string[] args) => Parser.Default
+        .ParseArguments<Options>(args)
+        .WithParsed(RunWithOptions)
+        .WithNotParsed(HandleParseError);
+
+    private static void RunWithOptions(Options opts) {
+        Console.WriteLine($"ROM path: {opts.RomPath}");
+        Console.WriteLine($"Boot ROM path: {opts.BootromPath}");
+
+        if (!TestRom(opts.RomPath) || !TestBootRom(opts.BootromPath)) {
             return;
         }
 
-        if (bootRomPath != null && !TestBootRom(bootRomPath)) {
-            return;
-        }
-
-        Emulator emulator = new(romPath, bootRomPath);
+        Emulator emulator = new(opts.RomPath, opts.BootromPath);
         emulator.Run();
+    }
+
+    private static void HandleParseError(IEnumerable<Error> errs) {
     }
 
     private static bool TestRom(string romPath) {

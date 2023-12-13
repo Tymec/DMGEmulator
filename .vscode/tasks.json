@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "dotnet(build)",
+            "group": "build",
+            "command": "dotnet",
+            "args": [
+                "build",
+                // "${workspaceFolder}/GameBoy.sln",
+                // "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/m:4"
+            ],
+            "type": "process",
+            "problemMatcher": "$msCompile"
+        },
+    ]
+}

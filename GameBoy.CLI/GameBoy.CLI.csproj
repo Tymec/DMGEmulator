@@ -2,6 +2,9 @@
   <ItemGroup>
     <ProjectReference Include="..\GameBoy\GameBoy.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+  </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>

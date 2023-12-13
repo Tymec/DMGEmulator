@@ -79,10 +79,10 @@ public partial class CPU {
             debugLine += "Prefixed | "; // DEBUG
             opcode = Read8();
             debugLine += $"Opcode: 0x{opcode:X2} | "; // DEBUG
-            cycles = 4 + ExecutePrefixed(opcode);
+            // cycles = 4 + ExecutePrefixed(opcode);
         } else {
             debugLine += $"Opcode: 0x{opcode:X2} | "; // DEBUG
-            cycles = ExecuteUnprefixed(opcode);
+            // cycles = ExecuteUnprefixed(opcode);
         }
 
         debugLine += $"Cycles: {cycles}T"; // DEBUG
