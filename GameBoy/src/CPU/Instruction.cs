@@ -1,4 +1,4 @@
-namespace GameBoy.CPU.Opcode;
+namespace GameBoy.CPU;
 
 
 public readonly struct Instruction(string mnemonic, int length, int cycles, Action execute) {
@@ -11,4 +11,8 @@ public readonly struct Instruction(string mnemonic, int length, int cycles, Acti
     //     var instruction = Parse(opcode);
     //     return $"0x{opcode:X2} {string.Format(instruction.Mnemonic, operands)}";
     // }
+
+    public static readonly Instruction INVALID = new("INVALID", 1, 1, () => {
+        throw new InvalidOperationException("Invalid opcode");
+    });
 }
