@@ -8,27 +8,27 @@ using GameBoy.Cpu;
 public class Emulator {
     private bool _running = false;
 
-    private readonly CPU cpu;
-    private readonly MMU mmu;
+    private readonly CPU _cpu;
+    private readonly MMU _mmu;
 
     public Emulator(Cartridge cartridge) {
         if (!cartridge.Valid) throw new Exception("Invalid cartridge");
 
-        mmu = new MMU(cartridge);
+        _mmu = new MMU(cartridge);
         var interrupts = new Interrupts.Handler();
-        cpu = new CPU(mmu, interrupts);
+        _cpu = new CPU(_mmu, interrupts);
     }
 
     public Emulator(string romPath, string? bootromPath = null) {
         var cartridge = Cartridge.FromFile(romPath);
 
-        mmu = new MMU(cartridge);
+        _mmu = new MMU(cartridge);
         var interrupts = new Interrupts.Handler();
-        cpu = new CPU(mmu, interrupts);
+        _cpu = new CPU(_mmu, interrupts);
 
         if (bootromPath != null) {
             byte[] bootrom = File.ReadAllBytes(bootromPath);
-            mmu.LoadBootrom(bootrom);
+            _mmu.LoadBootrom(bootrom);
         } else {
             throw new NotImplementedException();
         }
@@ -37,7 +37,7 @@ public class Emulator {
     public void Run() {
         _running = true;
         while (_running) {
-            cpu.Cycle();
+            _cpu.Cycle();
 
             // For now sleep for 500ms to see what's going on
             Thread.Sleep(500);

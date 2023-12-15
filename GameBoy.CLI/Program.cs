@@ -19,7 +19,7 @@ public class Program {
 
     private static void RunWithOptions(Options opts) {
         if (!TestRom(opts.RomPath)) return;
-        if (opts.BootromPath != null && TestBootRom(opts.BootromPath)) return;
+        if (opts.BootromPath != null && !TestBootRom(opts.BootromPath)) return;
 
         Emulator emulator = new(opts.RomPath, opts.BootromPath);
         emulator.Run();
