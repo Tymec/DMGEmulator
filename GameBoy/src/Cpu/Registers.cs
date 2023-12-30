@@ -41,64 +41,84 @@ public struct Registers {
         readonly get => (F & 0x10) != 0;
         set => F = (byte)((F & 0xEF) | (value ? 0x10 : 0));
     }
-}
 
-public class OldRegisters {
-    public byte A { get; set; }
-    public byte B { get; set; }
-    public byte C { get; set; }
-    public byte D { get; set; }
-    public byte E { get; set; }
-    public byte H { get; set; }
-    public byte L { get; set; }
-
-    public ushort SP { get; set; }
-    public ushort PC { get; set; }
-
-    public bool ZeroFlag { get; set; }
-    public bool SubtractionFlag { get; set; }
-    public bool HalfCarryFlag { get; set; }
-    public bool CarryFlag { get; set; }
-
-    public byte F {
-        get => (byte)((ZeroFlag ? 0x80 : 0) | (SubtractionFlag ? 0x40 : 0) | (HalfCarryFlag ? 0x20 : 0) | (CarryFlag ? 0x10 : 0));
+    public ushort this[ERegisterPair pair] {
+        readonly get => pair switch {
+            ERegisterPair.AF => AF,
+            ERegisterPair.BC => BC,
+            ERegisterPair.DE => DE,
+            ERegisterPair.HL => HL,
+            ERegisterPair.SP => SP,
+            ERegisterPair.PC => PC,
+            _ => throw new System.NotImplementedException()
+        };
         set {
-            ZeroFlag = (value & 0x80) != 0;
-            SubtractionFlag = (value & 0x40) != 0;
-            HalfCarryFlag = (value & 0x20) != 0;
-            CarryFlag = (value & 0x10) != 0;
+            switch (pair) {
+                case ERegisterPair.AF:
+                    AF = value;
+                    break;
+                case ERegisterPair.BC:
+                    BC = value;
+                    break;
+                case ERegisterPair.DE:
+                    DE = value;
+                    break;
+                case ERegisterPair.HL:
+                    HL = value;
+                    break;
+                case ERegisterPair.SP:
+                    SP = value;
+                    break;
+                case ERegisterPair.PC:
+                    PC = value;
+                    break;
+                default:
+                    throw new System.NotImplementedException();
+            }
         }
     }
 
-    public ushort AF {
-        get => (ushort)((A << 8) | F);
+    public byte this[ERegister r] {
+        readonly get => r switch {
+            ERegister.A => A,
+            ERegister.B => B,
+            ERegister.C => C,
+            ERegister.D => D,
+            ERegister.E => E,
+            ERegister.H => H,
+            ERegister.L => L,
+            ERegister.F => F,
+            _ => throw new System.NotImplementedException()
+        };
         set {
-            A = (byte)(value >> 8);
-            F = (byte)(value & 0xFF);
-        }
-    }
-
-    public ushort BC {
-        get => (ushort)((B << 8) | C);
-        set {
-            B = (byte)(value >> 8);
-            C = (byte)(value & 0xFF);
-        }
-    }
-
-    public ushort DE {
-        get => (ushort)((D << 8) | E);
-        set {
-            D = (byte)(value >> 8);
-            E = (byte)(value & 0xFF);
-        }
-    }
-
-    public ushort HL {
-        get => (ushort)((H << 8) | L);
-        set {
-            H = (byte)(value >> 8);
-            L = (byte)(value & 0xFF);
+            switch (r) {
+                case ERegister.A:
+                    A = value;
+                    break;
+                case ERegister.B:
+                    B = value;
+                    break;
+                case ERegister.C:
+                    C = value;
+                    break;
+                case ERegister.D:
+                    D = value;
+                    break;
+                case ERegister.E:
+                    E = value;
+                    break;
+                case ERegister.H:
+                    H = value;
+                    break;
+                case ERegister.L:
+                    L = value;
+                    break;
+                case ERegister.F:
+                    F = value;
+                    break;
+                default:
+                    throw new System.NotImplementedException();
+            }
         }
     }
 }
