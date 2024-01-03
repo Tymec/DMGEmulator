@@ -1,5 +1,3 @@
-using GameBoy.Cpu.Op;
-
 namespace GameBoy.Cpu;
 
 
@@ -22,8 +20,9 @@ public partial class CPU {
         this.mmu = mmu;
         this.interrupts = interrupts;
 
-        BuildUnprefixedOpcodes();
-        BuildPrefixedOpcodes();
+        OpcodeBuilder builder = new OpcodeBuilder(this);
+        unprefixed = builder.BuildUnprefixed();
+        prefixed = builder.BuildPrefixed();
     }
 
     public void Cycle() {
@@ -35,19 +34,19 @@ public partial class CPU {
             return;
         }
 
-        string debugLine = $"PC: 0x{Reg.PC - 1:X4} | "; // DEBUG
+        string debugLine = $"-> {Reg.PC:X4} | ";
         byte opcode = Read();
         if (opcode == 0xCB) {
-            debugLine += $"0xCB Prefix  | "; // DEBUG
+            debugLine += $"0xCB";
         } else {
-            debugLine += $"Unprefixed   | "; // DEBUG
+            debugLine += $"  0x";
         }
 
         Opcode instr = Decode(opcode);
-        instr.Execute(this);
+        instr.Execute();
 
-        debugLine += $"0x{opcode:X2} | {instr.Mnemonic} | ({instr.Cycles}T, {instr.Length}B)"; // DEBUG
-        Console.WriteLine(debugLine); // DEBUG
+        debugLine += $"{opcode:X2} | {instr.Mnemonic}";
+        Console.WriteLine(debugLine);
 
         if (InterruptsScheduled) {
             InterruptsScheduled = false;
@@ -56,16 +55,12 @@ public partial class CPU {
     }
 
     private Opcode Decode(byte opcode) {
-        Opcode? instr;
+        Opcode instr;
         if (opcode == 0xCB) {
             opcode = Read();
-            instr = prefixed.ElementAtOrDefault(opcode);
+            instr = prefixed[opcode];
         } else {
-            instr = unprefixed.ElementAtOrDefault(opcode);
-        }
-
-        if (instr == null) {
-            throw new InvalidOperationException($"Invalid opcode: 0x{opcode:X2}");
+            instr = unprefixed[opcode];
         }
 
         return instr;
