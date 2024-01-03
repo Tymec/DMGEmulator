@@ -402,13 +402,13 @@ public class OpcodeBuilder(CPU cpu) {
             });
             unprefixedOps[0xC0 + i * 8] = opcode;
         } // RET cc[y]
-        unprefixedOps[0xE0] = new("LD (FF00+u8), A", 2, 12, () => {
+        unprefixedOps[0xE0] = new("LD (0xFF00+u8), A", 2, 12, () => {
             // TODO: Implement LD (FF00+u8), A behavior
         }); // LD (FF00+u8), A
         unprefixedOps[0xE8] = new("ADD SP, i8", 2, 16, () => {
             // TODO: Implement ADD SP, i8 behavior
         }); // ADD SP, i8
-        unprefixedOps[0xF0] = new("LD A, (FF00+u8)", 2, 12, () => {
+        unprefixedOps[0xF0] = new("LD A, (0xFF00+u8)", 2, 12, () => {
             // TODO: Implement LD A, (FF00+u8) behavior
         }); // LD A, (FF00+u8)
         unprefixedOps[0xF8] = new("LD HL, SP+i8", 2, 12, () => {
@@ -446,14 +446,14 @@ public class OpcodeBuilder(CPU cpu) {
             });
             unprefixedOps[0xC2 + i * 8] = opcode;
         } // JP cc[y], u16
-        unprefixedOps[0xE2] = new("LD (FF00+C), A", 1, 8, () => {
+        unprefixedOps[0xE2] = new("LD (0xFF00+C), A", 1, 8, () => {
             // TODO: Implement LD (FF00+C), A behavior
         }); // LD (FF00+C), A
         unprefixedOps[0xEA] = new("LD (u16), A", 3, 16, () => {
             var addr = cpu.ReadWord();
             cpu.Write(addr, cpu.Reg.A);
         }); // LD (u16), A
-        unprefixedOps[0xF2] = new("LD A, (FF00+C)", 1, 8, () => {
+        unprefixedOps[0xF2] = new("LD A, (0xFF00+C)", 1, 8, () => {
             // TODO: Implement LD A, (FF00+C) behavior
         }); // LD A, (FF00+C)
         unprefixedOps[0xFA] = new("LD A, (u16)", 3, 16, () => {

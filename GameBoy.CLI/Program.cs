@@ -45,6 +45,7 @@ public class Program {
             Console.WriteLine($"Version number: {cartridge.VersionNumber}");
             Console.WriteLine($"Header checksum: {cartridge.IsHeaderChecksumValid}");
             Console.WriteLine($"Global checksum: {cartridge.GlobalChecksum}");
+
             return true;
         } catch (Exception e) {
             Console.WriteLine(e);

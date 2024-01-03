@@ -12,9 +12,9 @@
             "program": "${workspaceFolder}/GameBoy.CLI/bin/Debug/net8.0/GameBoy.CLI.dll",
             "args": [
                 "--rom",
-                "Roms/Tetris.gb",
+                "user/roms/Tetris.gb",
                 "--boot-rom",
-                "Roms/DMG_BOOT.bin"
+                "user/boot/DMG_BOOT.bin"
             ],
             "stopAtEntry": false,
             "console": "integratedTerminal",

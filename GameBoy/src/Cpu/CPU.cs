@@ -66,6 +66,10 @@ public partial class CPU {
         return instr;
     }
 
+    public Opcode GetOpcode(byte opcode, bool isPrefixed = false) {
+        return isPrefixed ? prefixed[opcode] : unprefixed[opcode];
+    }
+
     public byte Read(ushort addr) => mmu.Read(addr);
 
     public byte Read() => Read(Reg.PC++);

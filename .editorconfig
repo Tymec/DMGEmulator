@@ -70,28 +70,6 @@ dotnet_naming_rule.constant_fields_should_be_pascal_case.style    = pascal_case_
 dotnet_naming_symbols.constant_fields.applicable_kinds            = field
 dotnet_naming_symbols.constant_fields.applicable_accessibilities  = *
 dotnet_naming_symbols.constant_fields.required_modifiers          = const
-# Use PascalCase for public members
-dotnet_naming_symbols.public_symbols.applicable_kinds           = property,method,field,event,delegate
-dotnet_naming_symbols.public_symbols.applicable_accessibilities = public
-# dotnet_naming_symbols.public_symbols.required_modifiers         = readonly
-dotnet_naming_style.first_word_upper_case_style.capitalization = first_word_upper
-dotnet_naming_rule.public_members_must_be_capitalized.symbols  = public_symbols
-dotnet_naming_rule.public_members_must_be_capitalized.style    = first_word_upper_case_style
-dotnet_naming_rule.public_members_must_be_capitalized.severity = suggestion
-# Use _camelCase for private instance fields
-dotnet_naming_symbols.private_fields.applicable_kinds = field
-dotnet_naming_symbols.private_fields.applicable_accessibilities = private
-dotnet_naming_symbols.private_static_fields.applicable_kinds = field
-dotnet_naming_symbols.private_static_fields.applicable_accessibilities = private
-dotnet_naming_symbols.private_static_fields.required_modifiers = static
-dotnet_naming_style.underscored.capitalization = camel_case
-dotnet_naming_style.underscored.required_prefix = _
-dotnet_naming_rule.private_fields_underscored.symbols = private_fields
-dotnet_naming_rule.private_fields_underscored.style = underscored
-dotnet_naming_rule.private_fields_underscored.severity = suggestion
-dotnet_naming_rule.private_static_fields_none.symbols = private_static_fields
-dotnet_naming_rule.private_static_fields_none.style = underscored
-dotnet_naming_rule.private_static_fields_none.severity = suggestion
 ###############################
 # C# Coding Conventions       #
 ###############################

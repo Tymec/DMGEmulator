@@ -445,3 +445,6 @@ obj/
 *.gb
 *.gbc
 *.bin
+
+# Emulator
+user/*

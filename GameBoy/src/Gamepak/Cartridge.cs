@@ -66,6 +66,8 @@ public abstract class Cartridge {
         };
     }
 
+    public byte[] GetData() => data;
+
     public virtual byte ReadRom(ushort address) => data[address];
     public virtual byte ReadRam(ushort address) => 0xFF;
 

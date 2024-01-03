@@ -24,6 +24,8 @@ public class MMU(Cartridge cart) {
         set => Write(address, value);
     }
 
+    public Cartridge GetCartridge() => cart;
+
     public byte Read(ushort address) => address switch {
         >= 0x0000 and < 0x0100 => _bootrom[address],                // Boot ROM
         >= 0x0100 and < 0x4000 => cart.ReadRom(address),            // ROM bank 00
