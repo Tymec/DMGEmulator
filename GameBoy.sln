@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBoy", "GameBoy\GameBoy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBoy.CLI", "GameBoy.CLI\GameBoy.CLI.csproj", "{61F0F52F-BFC6-4605-BE9A-F83C7DE32E26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBoy.Tests", "GameBoy.Tests\GameBoy.Tests.csproj", "{6F3909A3-A725-4B27-8C6D-041D01201A20}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +46,17 @@ Global
 		{61F0F52F-BFC6-4605-BE9A-F83C7DE32E26}.Release|x64.Build.0 = Release|Any CPU
 		{61F0F52F-BFC6-4605-BE9A-F83C7DE32E26}.Release|x86.ActiveCfg = Release|Any CPU
 		{61F0F52F-BFC6-4605-BE9A-F83C7DE32E26}.Release|x86.Build.0 = Release|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Debug|x64.Build.0 = Debug|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Debug|x86.Build.0 = Debug|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Release|x64.ActiveCfg = Release|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Release|x64.Build.0 = Release|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Release|x86.ActiveCfg = Release|Any CPU
+		{6F3909A3-A725-4B27-8C6D-041D01201A20}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
